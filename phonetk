@@ -1,0 +1,38 @@
+import requests
+import json
+
+def get_phone_data(phone_number, api_key):
+    base_url = "https://www.ipqualityscore.com/api/json/phone/"
+    params = {
+        "strictness": 1,
+        "user_agent": "false",
+        "mobile": "false",
+        "allow_public_access_points": "true",
+        "contact_validation": "false",
+        "active": "true",
+        "fast": "true",
+        "formatting": "true",
+        "line_type": "true",
+        "carrier": "true",
+        "location": "false",
+        "country": "false",
+        "city": "false",
+        "region": "false",
+        "time_zone": "false",
+        "latitude": "false",
+        "longitude": "false"
+    }
+
+    response = requests.get(base_url + api_key + '/' + phone_number, params=params)
+    data = response.json()
+
+    return data
+
+api_key = "19fGirhqx6lSuh6frRLDVF8s2MpV0VW6"
+
+phone_number = input("Entrer le numero: ")
+
+phone_data = get_phone_data(phone_number, api_key)
+
+print("Information sur le numero {}:".format(phone_number))
+print(json.dumps(phone_data, indent=2))
