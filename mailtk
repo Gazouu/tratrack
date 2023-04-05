@@ -1,0 +1,41 @@
+import requests
+import json
+
+def get_email_data(email, api_key):
+    base_url = "https://www.ipqualityscore.com/api/json/email/"
+    params = {
+        "strictness": 1,
+        "timeout": 10,
+        "user_agent": "false",
+        "mobile": "false",
+        "first_name": "false",
+        "last_name": "false",
+        "honeypot": "false",
+        "suggestion": "false",
+        "fast": "false",
+        "sanitization": "false",
+        "recent_abuse": "false",
+        "mail_server": "false",
+        "domain_age": "false",
+        "disposable": "true",
+        "dns": "true",
+        "smtp": "true",
+        "deliverable": "true",
+        "accept_all": "true",
+        "blocklist": "true",
+        "spam_trap": "true"
+    }
+
+    response = requests.get(base_url + api_key + '/' + email, params=params)
+    data = response.json()
+
+    return data
+
+api_key = "19fGirhqx6lSuh6frRLDVF8s2MpV0VW6"
+
+email_address = input("Entrer une adresse e-mail: ")
+
+email_data = get_email_data(email_address, api_key)
+
+print("Données collectées sur l'adresse e-mail {}:".format(email_address))
+print(json.dumps(email_data, indent=2))
